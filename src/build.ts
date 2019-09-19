@@ -113,7 +113,7 @@ function mark(type: any, attrs: any) {
    };
 }
 
-export default function(schema: Schema, names?: { [key: string]: any }) {
+export function builders(schema: Schema, names?: { [key: string]: any }) {
    let result: { [key: string]: any } = { schema };
 
    for (let name in schema.nodes) {
