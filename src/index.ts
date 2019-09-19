@@ -10,7 +10,7 @@ const testSchema = new Schema({
    marks: schema.spec.marks
 });
 
-export const out = builders(testSchema, {
+export const nodes = builders(testSchema, {
    p: { nodeType: 'paragraph' },
    pre: { nodeType: 'code_block' },
    h1: { nodeType: 'heading', level: 1 },
@@ -26,15 +26,18 @@ export const out = builders(testSchema, {
 });
 
 export const eq = (a: any, b: any) => a.eq(b);
-export const p = out['p'];
-export const pre = out['pre'];
-export const h1 = out['h1'];
-export const h2 = out['h2'];
-export const h3 = out['h3'];
-export const li = out['li'];
-export const ul = out['ul'];
-export const ol = out['ol'];
-export const br = out['br'];
-export const img = out['img'];
-export const hr = out['hr'];
-export const a = out['a'];
+export const p = nodes['p'];
+export const pre = nodes['pre'];
+export const h1 = nodes['h1'];
+export const h2 = nodes['h2'];
+export const h3 = nodes['h3'];
+export const li = nodes['li'];
+export const ul = nodes['ul'];
+export const ol = nodes['ol'];
+export const br = nodes['br'];
+export const img = nodes['img'];
+export const hr = nodes['hr'];
+export const a = nodes['a'];
+export const doc = nodes['doc'];
+export const em = nodes['em'];
+export const blockquote = nodes['blockquote'];
