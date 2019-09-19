@@ -1,4 +1,24 @@
-# prosemirror-test-builder
+[![npm package](https://img.shields.io/npm/v/@toba/editor-test.svg)](https://www.npmjs.org/package/@toba/editor-test)
+![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
+[![Dependencies](https://img.shields.io/david/toba/editor-test.svg)](https://david-dm.org/toba/editor-test)
+[![DevDependencies](https://img.shields.io/david/dev/toba/editor-test.svg)](https://david-dm.org/toba/editor-test#info=devDependencies&view=list)
+
+<img src='https://toba.github.io/about/images/logo-colored.svg' width="100" align="right"/>
+
+This is a fork of [prosemirror-test-builder](https://github.com/ProseMirror/prosemirror-test-builder) with these trade-offs:
+
+-  Converted to strict TypeScript
+-  Formatted with Prettier
+-  Unit test coverage reports
+-  Fully compatible (interchangeable) with original ProseMirror modules
+-  Distributed as both CommonJS and ESM modules with no bundling
+
+   -  Better tree shaking
+   -  `package.json` configuration facilitates automatic load of correct module types
+
+-  No direct forum or community support
+
+## Original ProseMirror documentation
 
 [ [**WEBSITE**](http://prosemirror.net) | [**ISSUES**](https://github.com/prosemirror/prosemirror-test-builder/issues) | [**FORUM**](https://discuss.prosemirror.net) | [**GITTER**](https://gitter.im/ProseMirror/prosemirror) ]
 

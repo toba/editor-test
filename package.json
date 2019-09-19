@@ -1,19 +1,38 @@
 {
-  "name": "prosemirror-test-builder",
-  "version": "1.0.1",
-  "description": "Helpers for programatically building ProseMirror test documents",
-  "main": "dist/index.js",
+  "name": "@toba/editor-test",
+  "version": "2.0.0",
+  "description": "Helpers for programatically building editor test documents",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "esm",
+    "cjs"
+  ],
   "license": "MIT",
   "maintainers": [
     {
       "name": "Marijn Haverbeke",
       "email": "marijnh@gmail.com",
       "web": "http://marijnhaverbeke.nl"
+    },
+    {
+      "name": "Jason Abbott"
     }
   ],
+  "scripts": {
+    "build:esm": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.esm.json",
+    "build:cjs": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.cjs-min.json",
+    "prepublishOnly": "npm run build:esm & npm run build:cjs",
+    "test": "jest --coverage"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/prosemirror/prosemirror-test-builder.git"
+    "url": "https://github.com/toba/editor-test.git"
   },
   "dependencies": {
     "prosemirror-model": "^1.0.0",
@@ -21,13 +40,9 @@
     "prosemirror-schema-list": "^1.0.0"
   },
   "devDependencies": {
-    "rollup": "^0.49.0",
-    "rollup-plugin-buble": "^0.15.0"
-  },
-  "scripts": {
-    "test": "mocha test/test-*.js",
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "prepare": "npm run build"
+    "@toba/develop": "^6.7.0",
+    "@types/prosemirror-model": "^1.7.2",
+    "@types/prosemirror-schema-basic": "^1.0.1",
+    "@types/prosemirror-schema-list": "^1.0.1"
   }
 }
