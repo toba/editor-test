@@ -1,6 +1,6 @@
 import { schema } from 'prosemirror-schema-basic';
 import { addListNodes } from 'prosemirror-schema-list';
-import { Schema } from 'prosemirror-model';
+import { Schema, Node } from 'prosemirror-model';
 import { builders } from './build';
 
 export { builders } from './build';
@@ -26,18 +26,18 @@ export const nodes = builders(testSchema, {
 });
 
 export const eq = (a: any, b: any) => a.eq(b);
-export const p = nodes['p'];
-export const pre = nodes['pre'];
-export const h1 = nodes['h1'];
-export const h2 = nodes['h2'];
-export const h3 = nodes['h3'];
-export const li = nodes['li'];
-export const ul = nodes['ul'];
-export const ol = nodes['ol'];
-export const br = nodes['br'];
-export const img = nodes['img'];
-export const hr = nodes['hr'];
-export const a = nodes['a'];
-export const doc = nodes['doc'];
-export const em = nodes['em'];
-export const blockquote = nodes['blockquote'];
+export const p: Node = nodes['p'];
+export const pre: Node = nodes['pre'];
+export const h1: Node = nodes['h1'];
+export const h2: Node = nodes['h2'];
+export const h3: Node = nodes['h3'];
+export const li: Node = nodes['li'];
+export const ul: Node = nodes['ul'];
+export const ol: Node = nodes['ol'];
+export const br: Node = nodes['br'];
+export const img: Node = nodes['img'];
+export const hr: Node = nodes['hr'];
+export const a: Node = nodes['a'];
+export const doc: Node = nodes['doc'];
+export const em: Node = nodes['em'];
+export const blockquote: Node = nodes['blockquote'];
