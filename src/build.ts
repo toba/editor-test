@@ -1,36 +1,43 @@
-import { Node } from 'prosemirror-model';
+import { Node, Schema } from 'prosemirror-model';
 
-const noTag = ((Node.prototype as any).tag = Object.create(null));
+const noTag: Node = ((Node.prototype as any).tag = Object.create(null));
 
-function flatten(schema: any, children: any, f: any) {
-   let result = [],
-      pos = 0,
-      tag = noTag;
+function flatten(schema: Schema, children: any, f: any) {
+   const result = [];
+   let pos = 0;
+   let tag: any = noTag;
 
    for (let i = 0; i < children.length; i++) {
       let child = children[i];
+
       if (child.tag && child.tag != (Node.prototype as any).tag) {
          if (tag == noTag) tag = Object.create(null);
-         for (let id in child.tag)
+         for (let id in child.tag) {
             tag[id] =
                child.tag[id] + (child.flat || child.isText ? 0 : 1) + pos;
+         }
       }
 
       if (typeof child == 'string') {
-         let re = /<(\w+)>/g,
-            m,
-            at = 0,
-            out = '';
+         const re = /<(\w+)>/g;
+         let m;
+         let at = 0;
+         let out = '';
+
          while ((m = re.exec(child))) {
             out += child.slice(at, m.index);
             pos += m.index - at;
             at = m.index + m[0].length;
-            if (tag == noTag) tag = Object.create(null);
+            if (tag == noTag) {
+               tag = Object.create(null);
+            }
             tag[m[1]] = pos;
          }
          out += child.slice(at);
          pos += child.length - at;
-         if (out) result.push(f(schema.text(out)));
+         if (out) {
+            result.push(f(schema.text(out)));
+         }
       } else if (child.flat) {
          for (let j = 0; j < child.flat.length; j++) {
             let node = f(child.flat[j]);
@@ -46,24 +53,31 @@ function flatten(schema: any, children: any, f: any) {
    return { nodes: result, tag };
 }
 
-function id(x: any) {
-   return x;
-}
+const id = <T>(x: T): T => x;
 
-function takeAttrs(attrs: any, args: any) {
+function takeAttrs(attrs: any, args: any[]) {
    let a0 = args[0];
    if (
       !args.length ||
       (a0 && (typeof a0 == 'string' || a0 instanceof Node || a0.flat))
-   )
+   ) {
       return attrs;
-
+   }
    args.shift();
-   if (!attrs) return a0;
-   if (!a0) return attrs;
+
+   if (!attrs) {
+      return a0;
+   }
+   if (!a0) {
+      return attrs;
+   }
    let result: any = {};
-   for (let prop in attrs) result[prop] = attrs[prop];
-   for (let prop in a0) result[prop] = a0[prop];
+   for (let prop in attrs) {
+      result[prop] = attrs[prop];
+   }
+   for (let prop in a0) {
+      result[prop] = a0[prop];
+   }
    return result;
 }
 
@@ -74,13 +88,17 @@ function block(type: any, attrs: any): any {
       let myAttrs = takeAttrs(attrs, args);
       let { nodes, tag } = flatten(type.schema, args, id);
       let node = type.create(myAttrs, nodes);
-      if (tag != noTag) node.tag = tag;
+
+      if (tag != noTag) {
+         node.tag = tag;
+      }
       return node;
    };
-   if (type.isLeaf)
+   if (type.isLeaf) {
       try {
          (result as any).flat = [type.create(attrs)];
       } catch (_) {}
+   }
    return result;
 }
 
@@ -95,19 +113,28 @@ function mark(type: any, attrs: any) {
    };
 }
 
-export default function(schema: any, names: any) {
-   let result: any = { schema };
-   for (let name in schema.nodes) result[name] = block(schema.nodes[name], {});
-   for (let name in schema.marks) result[name] = mark(schema.marks[name], {});
+export default function(schema: Schema, names?: { [key: string]: any }) {
+   let result: { [key: string]: any } = { schema };
 
-   if (names)
+   for (let name in schema.nodes) {
+      result[name] = block(schema.nodes[name], {});
+   }
+   for (let name in schema.marks) {
+      result[name] = mark(schema.marks[name], {});
+   }
+
+   if (names) {
       for (let name in names) {
-         let value = names[name],
-            typeName = value.nodeType || value.markType || name,
-            type;
-         if ((type = schema.nodes[typeName])) result[name] = block(type, value);
-         else if ((type = schema.marks[typeName]))
+         const value = names[name];
+         const typeName = value.nodeType || value.markType || name;
+         let type;
+
+         if ((type = schema.nodes[typeName])) {
+            result[name] = block(type, value);
+         } else if ((type = schema.marks[typeName])) {
             result[name] = mark(type, value);
+         }
       }
+   }
    return result;
 }
